@@ -23,5 +23,5 @@ name:{
 },
 })
 
-const ProductModel=mongoose.model("ProductModel",productschema);
+const ProductModel=mongoose.model("ProductModes",productschema);
 module.exports={ProductModel}

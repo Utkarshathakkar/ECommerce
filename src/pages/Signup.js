@@ -149,9 +149,9 @@ return (
       <button className="bg-yellow-50 rounded-[8px] font-medium text-richblack-900 px-[12px] py-[8px] mt-6 w-full">
        Create account
       </button>
-      <p className="text-left text-sm mt-2">
+      <p className="text-left text-white text-sm mt-2">
           Already have account ?{" "}
-          <Link to={"/login"} className="text-white-500 underline">
+          <Link to={"/login"} className="text-yellow-50 underline">
             Login
           </Link>
         </p>

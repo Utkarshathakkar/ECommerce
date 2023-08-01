@@ -1,11 +1,12 @@
 import React from 'react'
 import Header from '../components/Header';
-import React, { useEffect, useRef, useState } from "react";
+import  { useRef,} from "react"
 import { useSelector } from "react-redux";
-import CardFeature from "../component/CardFeature";
-import HomeCard from "../component/HomeCard";
+import CardFeature from "../components/CardFeature";
 import { GrPrevious, GrNext } from "react-icons/gr";
-
+import HomeCard from '../components/HomeCard';
+import Spinner from '../components/Spinner';
+import AllProduct from '../components/AllProduct';
 
 const Home = () => {
   
@@ -15,9 +16,7 @@ const Home = () => {
       (el) => el.category === "vegetable",
       []
     );
-    const loadingArray = new Array(4).fill(null);
-    const loadingArrayFeature = new Array(10).fill(null);
-  
+    
     const slideProductRef = useRef();
     const nextProduct = () => {
       slideProductRef.current.scrollLeft += 200;
@@ -27,16 +26,18 @@ const Home = () => {
     };
   
   return (
-    <div>
-        <Header/>
-       <div className="p-2 md:p-4">
+    <>
+    <Header/>
+    <div className=" py-14">
+     <div className="p-2 md:p-4">
       <div className="md:flex gap-4 py-2">
         <div className="md:w-1/2">
           <div className="flex gap-3 bg-slate-300 w-36 px-2 items-center rounded-full">
             <p className="text-sm font-medium text-slate-900">Bike Delivery</p>
             <img
               src="https://cdn-icons-png.flaticon.com/512/2972/2972185.png"
-              className="h-7"
+              alt="noimg"
+              className="h-7"y
             />
           </div>
           <h2 className="text-4xl md:text-7xl font-bold py-3">
@@ -69,15 +70,14 @@ const Home = () => {
                   />
                 );
               })
-            : loadingArray.map((el, index) => {
-                return <HomeCard key={index+"loading"} loading={"Loading..."} />;
-              })}
+               : <Spinner/>
+              }
         </div>
       </div>
 
-      <div className="">
+      
         <div className="flex w-full items-center">
-          <h2 className="font-bold text-2xl text-slate-800 mb-4">
+          <h2 className="font-bold text-2xl text-richblack-900 mb-4">
             Fresh Vegetables
           </h2>
           <div className="ml-auto flex gap-4">
@@ -95,10 +95,7 @@ const Home = () => {
             </button>
           </div>
         </div>
-        <div
-          className="flex gap-5 overflow-scroll scrollbar-none scroll-smooth transition-all"
-          ref={slideProductRef}
-        >
+        <div className="flex gap-5 overflow-scroll scrollbar-none scroll-smooth transition-all"ref={slideProductRef} >
           {homeProductCartListVegetables[0]
             ? homeProductCartListVegetables.map((el) => {
                 return (
@@ -112,15 +109,15 @@ const Home = () => {
                   />
                 );
               })
-            : loadingArrayFeature.map((el,index) => (
-                <CardFeature loading="Loading..." key={index+"cartLoading"} />
-              ))}
+              : <Spinner/>
+              }
         </div>
       </div>
       
       <AllProduct heading={"Your Product"}/>
+
     </div>
-    </div>
+ </>
   )
 }
 

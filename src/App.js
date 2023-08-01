@@ -10,6 +10,10 @@ import Home from "./pages/Home.js";
 import toast, { Toaster } from 'react-hot-toast';
 import { useDispatch, useSelector } from "react-redux";
 import { setDataProduct } from "./redux/product";
+import { useEffect } from "react";
+import Cart from "./pages/Cart";
+import Success from "./pages/Success";
+import Cancel from "./pages/Cancel";
 
 
 function App() {
@@ -18,12 +22,12 @@ function App() {
  
   useEffect(()=>{
     (async()=>{
-      const res = await fetch(`${process.env.REACT_APP_SERVER_DOMIN}/product`)
+      const res = await fetch("http://localhost:8000/product");
       const resData = await res.json()
       dispatch(setDataProduct(resData))
     })()
   },[])
-
+  console.log(productData);
   return (
     <>
     <Toaster/>
@@ -33,8 +37,12 @@ function App() {
         <Route path="/login" element={<Login/>}/>
         <Route path="/signup" element={<Signup/>}/>
         <Route path="/about" element={<About/>}/>
-        <Route path="/menu" element={<Menu/>}/>
         <Route path="/newproduct" element={<NewProduct/>}/>
+        <Route path="menu/:filterby" element={<Menu />} />
+        <Route path="cart" element={<Cart />} />
+        <Route path="success" element={<Success/>}/>
+        <Route path="cancel" element={<Cancel/>}/>
+
       </Routes>
 
     </div>

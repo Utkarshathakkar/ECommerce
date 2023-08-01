@@ -1,9 +1,10 @@
 import React from "react";
 import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
-import { addCartItem,increaseQty } from "../redux/productSlide";
+import { addCartItem,increaseQty } from "../redux/product";
+import Spinner from "./Spinner";
 
-const CardFeature = ({ image, name, price, category, loading, id }) => {
+const CardFeature = ({ image, name, price, category, id }) => {
   const dispatch = useDispatch()
 
   const handleAddCartProduct = (e) => {
@@ -44,9 +45,7 @@ const CardFeature = ({ image, name, price, category, loading, id }) => {
           </button>
         </>
       ) : (
-        <div className="min-h-[150px] flex justify-center items-center">
-          <p>{loading}</p>
-        </div>
+           <Spinner/>
       )}
     </div>
   );

@@ -6,9 +6,8 @@ const router=express.Router();
 
 
 router.post("/signup", signup);
-
 router.post("/login",login);
 router.post("/newproduct",newproduct);
-router.get("/product",product)
+router.get("/product",product);
 
 module.exports=router;

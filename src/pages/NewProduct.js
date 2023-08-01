@@ -1,6 +1,5 @@
 import React from 'react'
 import Header from '../components/Header'
-import axios from "axios";
 import { useState } from 'react'
 import { toast } from 'react-hot-toast'
 import {BsCloudUpload} from "react-icons/bs"

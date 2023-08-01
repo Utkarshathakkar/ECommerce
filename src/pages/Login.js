@@ -5,9 +5,10 @@ import {AiOutlineEye,AiOutlineEyeInvisible} from "react-icons/ai"
 import { useNavigate} from "react-router-dom"
 import Header from "../components/Header";
 import { useDispatch, useSelector } from "react-redux";
-import { loginRedux } from "../redux/userSlice";
+import { loginRedux } from "../redux/useSlice";
+import { Link } from "react-router-dom";
 
-function Login(){
+ function Login(){
 
     const navigate=useNavigate();
     const userData = useSelector(state => state)
@@ -30,24 +31,24 @@ function Login(){
           event.preventDefault();
           const {email,password}=formdata;
           if(email&& password){
-            const fetchData = await fetch(`${process.env.REACT_APP_SERVER_DOMIN}/login`,{
-                method : "POST",
-                headers : {
+            const fetchData = await fetch("http://localhost:8000/login",{
+                method:"POST",
+                headers:{
                   "content-type" : "application/json"
                 },
-                body : JSON.stringify(formdata)
+                body:JSON.stringify(formdata)
               })
               const dataRes = await fetchData.json()
-              console.log(dataRes)
+            
               
-              toast(dataRes.message);
+             toast(dataRes.message);
               if(dataRes.alert){
                 dispatch(loginRedux(dataRes))
                 setTimeout(() => {
                   navigate("/")
                 }, 1000);
               }
-              console.log(userData)
+              
 
           }
           else{
@@ -56,7 +57,7 @@ function Login(){
           
           toast.success("successfully logged In");
           navigate("/")
-
+   
      }
     return(
       <div className="bg-richblack-900 h-screen">
@@ -107,7 +108,7 @@ function Login(){
      </button>
         
    </form>
-   <p className="text-left text-sm mt-2">
+   <p className="text-left text-sm mt-2 text-white">
         Don't  have account ?{" "}
         <Link to={"/signup"} className="text-red-500 underline">
           Sign Up

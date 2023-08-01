@@ -6,7 +6,7 @@ const signup=  async(req,res)=>{
    const {email}=req.body;
       const user=  User.findOne({email:email});
       if(user.email==email){
-        res.json("Email id is already present")
+        res.send({message:"Email id is already present",alert:false})
       }
 
     
@@ -26,36 +26,36 @@ const signup=  async(req,res)=>{
         })  
 }
 
-const login =async(req,res)=>{
+const login =async (req,res)=>{
     const email=req.body.email;
     const password=req.body.password;
   try{
-   const user= await User.findOne({email:email})
-   if(!user){
+     const result= await User.findOne({email:email})
+   if(!result){
     return res.status(404).send("Email not found please signup",alert(false))
    }
-  if(await bcrypt.compare(password,user.password)){
+  if(await bcrypt.compare(password,result.password)){
 
-    
-        const token= await jwt.sign({id:user._id},process.env.SECRET);
-        console.log(token);
-        user=user.toObject();
-        user=user.token;
-        console.log(user)
-  
-        res.cookie("jwt",token,{
-        httpOnly:true,
-        expires:new Date(Date.now()+ 100000)
-       } ).status(200).json({details:{...otherdetails},message: "Login is successfully", alert: true,});
-    }
-    
-    else{
-     res.send("Invalid login details");
-    }
-   
-   
+   const dataSend = {
+      email: result.email,
+      firstname:result.firstname,
+      lastname:result.lastname
+    };
+    console.log(dataSend);
+    res.send({
+      message: "Login is successfully",
+      alert: true,
+      data: dataSend,
+    });
+   }else{
+      res.send({
+         message: "Email is not available, please sign up",
+         alert: false,
+       });
+   }
+
   }catch(e){
-     res.status(400).json("invalid login details")
+     res.status(400).json("some error occured")
   }
 
 }

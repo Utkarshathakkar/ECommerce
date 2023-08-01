@@ -1,117 +1,57 @@
-import React from 'react'
+import React from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { useNavigate, useParams } from "react-router-dom";
+import AllProduct from "../components/AllProduct";
+import { addCartItem } from "../redux/product";
 
 const Menu = () => {
+  const { filterby } = useParams();
+  const navigate = useNavigate()
+  const dispatch = useDispatch()
+  const productData = useSelector((state) => state.product.productList);
+
+  const productDisplay = productData.filter((el) => el._id === filterby)[0];
+
+  const handleAddCartProduct = (e) => {
+    dispatch(addCartItem(productDisplay))
+  };
+
+  const handleBuy = ()=>{
+    dispatch(addCartItem(productDisplay))
+      navigate("/cart")
+  }
   return (
-   /* <div>
-        <div className="pt-5 w-screen  bg-gray-800 ">
-    <div className="flex justify-between w-11/12 max-w-[1160px] py-12 mx-auto gap-x-12 gap-y-0">
-         <div className="w-11/12 max-w-[460px]">
-   <form onSubmit={submithandler}>
-<div className="flex gap-x-4 mt-[15px]">
-  <label className="w-full">
-        <p className="text-[0.875rem]  mb-1 leading-[1.375rem]">first Name
-            <sup className="text-pink-200">*</sup>
-        </p>
-        <input
-        required
-        type="text"
-        name="firstname"
-        onChange={changehandler}
-        placeholder="firstname"
-        value={formdata.firstname}
-        className="  bg-gray-800 rounded-[0.5rem] text-richblack-5 w-full p-[12px]"
-        />
-  </label>
-
-<label className="w-full">
-         <p className="text-[0.875rem] text-richblack-5 mb-1 leading-[1.375rem]"> last name  <sup className="text-pink-200">*</sup>
-        </p>
-        <input
-        required
-        type="text"
-        name="lastname"
-        onChange={changehandler}
-        placeholder="lastname"
-        value={formdata.lastname}
-        className="  bg-gray-800 rounded-[0.5rem] text-richblack-5 w-full p-[12px]"
-        />
-</label>
-</div>
-   <div className="mt-[15px]">
-      <label className="w-full">
-       <p className="text-[0.875rem] text-richblack-5 mb-1 leading-[1.375rem]"> email  <sup className="text-pink-200">*</sup>
-       </p>
-       <input
-        required
-        type="email"
-        name="email"
-        onChange={changehandler}
-        placeholder="email"
-        value={formdata.email}
-        className="  bg-gray-800 rounded-[0.5rem] text-richblack-5 w-full p-[12px]"
-        />
-      </label>
+    <div className="p-2 md:p-4">
+      <div className="w-full max-w-4xl m-auto md:flex bg-white">
+        <div className="max-w-sm  overflow-hidden w-full p-5">
+          <img
+            src={productDisplay.image}
+            className="hover:scale-105 transition-all h-full"
+          />
+        </div>
+        <div className="flex flex-col gap-1">
+          <h3 className="font-semibold text-slate-600  capitalize text-2xl md:text-4xl">
+            {productDisplay.name}
+          </h3>
+          <p className=" text-slate-500  font-medium text-2xl">{productDisplay.category}</p>
+          <p className=" font-bold md:text-2xl">
+            <span className="text-red-500 ">₹</span>
+            <span>{productDisplay.price}</span>
+          </p>
+          <div className="flex gap-3">
+          <button onClick={handleBuy} className="bg-yellow-500 py-1 mt-2 rounded hover:bg-yellow-600 min-w-[100px]">Buy</button>
+          <button onClick={handleAddCartProduct} className="bg-yellow-500 py-1 mt-2 rounded hover:bg-yellow-600 min-w-[100px]">Add Cart</button>
+          </div>
+          <div>
+            <p className="text-slate-600 font-medium">Description : </p>
+            <p>{productDisplay.description}</p>
+          </div>
+        </div>
       </div>
-     <div className=" w-full flex gap-x-4 mt-[15px]">
-      <label className=" w-full relative">
-         <p className="text-[0.875rem] text-richblack-5 mb-1 leading-[1.375rem]"> password  <sup className="text-pink-200">*</sup>
-         </p>
-        <input
-        required
-        type={showpassword? ("text"):("password")}
-        name="password"
-        onChange={changehandler}
-        placeholder="Enter Password"
-        value={formdata.password}
-        className="  bg-gray-800 rounded-[0.5rem] text-richblack-5 w-full p-[12px]"
-        />
-      <span className="absolute right-3 top-[38px] cursor-pointer" onClick={()=>{
-            setshowpassword((prev)=>
-                !prev) } }>
-            {showpassword?(<AiOutlineEyeInvisible fontSize={24} fill="#AFB2BF"/>):(<AiOutlineEye fontSize={24} fill="#AFB2BF"/>)}
-     </span>
-        
-     </label>
 
-     <label className=" w-full relative">
-         <p className="text-[0.875rem] text-richblack-5 mb-1 leading-[1.375rem]"> confirm password <sup className="text-pink-200">*</sup>
-        </p>
-        <input
-        required
-        type={showconfirmpassword? ("text"):("password")}
-        name="confirmpassword"
-        onChange={changehandler}
-        placeholder="confirm password"
-        value={formdata.confirmpassword}
-        className=" rounded-[0.5rem] text-richblack-5 w-full p-[12px]"
-        />
-      <span className="absolute right-3 top-[38px] cursor-pointer" onClick={()=>{
-            setshowconfirmpassword((prev)=>
-                !prev) } }>
-            {showconfirmpassword?(<AiOutlineEyeInvisible fontSize={24} fill="#AFB2BF"/>):(<AiOutlineEye fontSize={24} fill="#AFB2BF"/>)}
-     </span>
-        
-     </label>
+      <AllProduct heading={"Related Product"}/>
+    </div>
+  );
+};
 
-     </div>
-  
-  <button className="bg-yellow-500 rounded-[8px] font-medium  px-[12px] py-[8px] mt-6 w-full">
-   Create account
-  </button>
-  <p className="text-left text-sm mt-2">
-      Already have account ?{" "}
-      <Link to={"/login"} className="text-white-500 underline">
-        Login
-      </Link>
-    </p>
-
-</form>
-   </div>
- </div>
-</div>
-    </div>*/
-    Menu
-  )
-}
-
-export default Menu
+export default Menu;

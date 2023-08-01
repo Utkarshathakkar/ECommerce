@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import CardFeature from "./CardFeature";
 import FilterProduct from "./FilterProduct";
+import Spinner from "./Spinner";
 
 const AllProduct = ({ heading }) => {
   const productData = useSelector((state) => state.product.productList);
@@ -16,6 +17,7 @@ const AllProduct = ({ heading }) => {
   }, [productData]);
 
   const handleFilterProduct = (category) => {
+
     setFilterBy(category)
     const filter = productData.filter(
       (el) => el.category.toLowerCase() === category.toLowerCase()
@@ -25,7 +27,7 @@ const AllProduct = ({ heading }) => {
     });
   };
 
-  const loadingArrayFeature = new Array(10).fill(null);
+
 
   return (
     <div className="my-5">
@@ -45,7 +47,7 @@ const AllProduct = ({ heading }) => {
           })
         ) : (
           <div className="min-h-[150px] flex justify-center items-center">
-            <p>Loading...</p>
+            <Spinner/>
           </div>
         )}
       </div>
@@ -65,9 +67,8 @@ const AllProduct = ({ heading }) => {
               );
             })
           : 
-          loadingArrayFeature.map((el,index) => (
-              <CardFeature loading="Loading..." key={index+"allProduct"} />
-            ))}
+           <Spinner/>
+           }
       </div>
     </div>
   );
