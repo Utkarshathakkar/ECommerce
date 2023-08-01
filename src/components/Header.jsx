@@ -19,7 +19,7 @@ import { toast } from "react-hot-toast";
    const handlelogout=()=>{
        dispatch(logoutRedux);
        toast.success("Logout successfully");
-       navigate("/login")
+       navigate("/login");
    }
   
 
